@@ -47,10 +47,13 @@ const calculateOverviewStats = (monthData: Record<string, ClientData>) => {
         sum + (client.averageStars * client.totalUsers), 0);
     const averageStars = (weightedStars / totalUsers).toFixed(1);
 
-    // Aggregate completion rate
-    const totalCompleted = allClients.reduce((sum, client) => 
+    // Aggregate completed tasks
+    const totalCompleted = allClients.reduce((sum, client) =>
         sum + (client.statusData.find((s: { name: string; value: number }) => s.name === 'Completed')?.value || 0), 0);
-    const completionRate = ((totalCompleted / totalUsers) * 100).toFixed(1);
+   // Aggregate in progress tasks
+   const totalInProgress = allClients.reduce((sum, client) =>
+       sum + (client.statusData.find((s: { name: string; value: number }) => s.name === 'In Progress')?.value || 0), 0);
+   const progressionRate = ((totalInProgress / totalUsers) * 100).toFixed(1);
 
     // Combine component data
     const componentMap = new Map<string, number>();
@@ -86,7 +89,8 @@ const calculateOverviewStats = (monthData: Record<string, ClientData>) => {
     return {
         totalUsers,
         averageStars,
-        completionRate,
+        totalCompleted,
+        progressionRate,
         componentData,
         statusData,
         starDistribution,
@@ -128,9 +132,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ clientData }) => {
                         <div className="flex items-center space-x-2">
                             <Activity className="h-6 w-6 text-purple-500" />
                             <div>
-                                <p className="text-sm text-purple-600">Completion Rate</p>
+                                <p className="text-sm text-purple-600">Progression Rate</p>
                                 <h3 className="text-2xl font-bold text-purple-700">
-                                    {((clientData.statusData.find((s: { name: string; value: number }) => s.name === 'Completed')?.value || 0) / clientData.totalUsers * 100).toFixed(1)}%
+                                    {(((clientData.statusData.find((s: { name: string; value: number }) => s.name === 'In Progress')?.value || 0) / clientData.totalUsers) * 100).toFixed(1)}%
                                 </h3>
                             </div>
                         </div>
@@ -258,8 +262,8 @@ const OverviewDashboard: React.FC<{ monthData: Record<string, ClientData> }> = (
                         <div className="flex items-center space-x-2">
                             <Activity className="h-6 w-6 text-purple-500" />
                             <div>
-                                <p className="text-sm text-purple-600">Completion Rate</p>
-                                <h3 className="text-2xl font-bold text-purple-700">{stats.completionRate}%</h3>
+                                <p className="text-sm text-purple-600">Progression Rate</p>
+                                <h3 className="text-2xl font-bold text-purple-700">{stats.progressionRate}%</h3>
                             </div>
                         </div>
                     </CardContent>
