@@ -19,7 +19,9 @@ export const mockData = {
           { stars: 0, count: 37 },
           { stars: 1, count: 15 },
           { stars: 2, count: 1 },
-          { stars: 3, count: 5 }
+          { stars: 3, count: 5 },
+          { stars: 4, count: 0 },
+          { stars: 5, count: 0 }
         ]
       },
       'APSCHE': {
@@ -36,7 +38,11 @@ export const mockData = {
         ],
         starDistribution: [
           { stars: 0, count: 4 },
-          { stars: 1, count: 4 }
+          { stars: 1, count: 4 },
+          { stars: 2, count: 0 },
+          { stars: 3, count: 0 },
+          { stars: 4, count: 0 },
+          { stars: 5, count: 0 },
         ]
       },
       'ALIMS': {
@@ -53,7 +59,10 @@ export const mockData = {
         starDistribution: [
           { stars: 0, count: 1 },
           { stars: 1, count: 57 },
-          { stars: 2, count: 2 }
+          { stars: 2, count: 2 },
+          { stars: 3, count: 0 },
+          { stars: 4, count: 0 },
+          { stars: 5, count: 0 },
         ]
       },
       'Vishwa Vishwani': {
@@ -74,7 +83,8 @@ export const mockData = {
           { stars: 1, count: 9 },
           { stars: 2, count: 3 },
           { stars: 3, count: 7 },
-          { stars: 4, count: 10 }
+          { stars: 4, count: 10 },
+          { stars: 5, count: 0 },
         ]
       }
     },
