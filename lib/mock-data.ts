@@ -11,9 +11,9 @@ export const mockData = {
           { name: 'Submissions', value: 1 }
         ],
         statusData: [
-          { name: 'In Progress', value: 39 },
+          { name: 'In Progress', value: 47 },
           { name: 'Not Started', value: 11 },
-          { name: 'Completed', value: 8 }
+          { name: 'Completed', value: 0 }
         ],
         starDistribution: [
           { stars: 0, count: 37 },
@@ -32,8 +32,8 @@ export const mockData = {
           { name: 'Learning Path', value: 2 }
         ],
         statusData: [
-          { name: 'In Progress', value: 3 },
-          { name: 'Completed', value: 3 },
+          { name: 'In Progress', value: 6 },
+          { name: 'Completed', value: 0 },
           { name: 'Not Started', value: 2 }
         ],
         starDistribution: [
@@ -53,8 +53,8 @@ export const mockData = {
           { name: 'Assessments', value: 2 }
         ],
         statusData: [
-          { name: 'In Progress', value: 59 },
-          { name: 'Completed', value: 1 }
+          { name: 'In Progress', value: 60 },
+          { name: 'Completed', value: 0 }
         ],
         starDistribution: [
           { stars: 0, count: 1 },
@@ -76,8 +76,8 @@ export const mockData = {
           { name: 'All Courses', value: 1 }
         ],
         statusData: [
-          { name: 'In Progress', value: 27 },
-          { name: 'Completed', value: 2 }
+          { name: 'In Progress', value: 29 },
+          { name: 'Completed', value: 0 }
         ],
         starDistribution: [
           { stars: 1, count: 9 },
