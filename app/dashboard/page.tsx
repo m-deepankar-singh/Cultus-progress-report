@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Activity, Users, Star, BookOpen, Calendar } from 'lucide-react';
 import { mockData, availableMonths } from '@/lib/mock-data';
-import type { ClientData } from '@/types';
+import type { ClientData, ComponentData, StatusData, StarDistribution } from '../types';
 
 const VIBRANT_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B89B3'];
 const CHART_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'];
@@ -49,16 +49,16 @@ const calculateOverviewStats = (monthData: Record<string, ClientData>) => {
 
     // Aggregate completed tasks
     const totalCompleted = allClients.reduce((sum, client) =>
-        sum + (client.statusData.find((s: { name: string; value: number }) => s.name === 'Completed')?.value || 0), 0);
+        sum + (client.statusData.find((s: StatusData) => s.name === 'Completed')?.value || 0), 0);
    // Aggregate in progress tasks
    const totalInProgress = allClients.reduce((sum, client) =>
-       sum + (client.statusData.find((s: { name: string; value: number }) => s.name === 'In Progress')?.value || 0), 0);
+       sum + (client.statusData.find((s: StatusData) => s.name === 'In Progress')?.value || 0), 0);
    const progressionRate = ((totalInProgress / totalUsers) * 100).toFixed(1);
 
     // Combine component data
     const componentMap = new Map<string, number>();
     allClients.forEach(client => {
-        client.componentData.forEach(comp => {
+        client.componentData.forEach((comp: ComponentData) => {
             componentMap.set(comp.name, (componentMap.get(comp.name) || 0) + comp.value);
         });
     });
@@ -68,7 +68,7 @@ const calculateOverviewStats = (monthData: Record<string, ClientData>) => {
     // Combine status data
     const statusMap = new Map<string, number>();
     allClients.forEach(client => {
-        client.statusData.forEach(status => {
+        client.statusData.forEach((status: StatusData) => {
             statusMap.set(status.name, (statusMap.get(status.name) || 0) + status.value);
         });
     });
@@ -78,7 +78,7 @@ const calculateOverviewStats = (monthData: Record<string, ClientData>) => {
     // Combine star distribution
     const starMap = new Map<number, number>();
     allClients.forEach(client => {
-        client.starDistribution.forEach(star => {
+        client.starDistribution.forEach((star: StarDistribution) => {
             starMap.set(star.stars, (starMap.get(star.stars) || 0) + star.count);
         });
     });
@@ -134,7 +134,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ clientData }) => {
                             <div>
                                 <p className="text-sm text-purple-600">Progression Rate</p>
                                 <h3 className="text-2xl font-bold text-purple-700">
-                                    {(((clientData.statusData.find((s: { name: string; value: number }) => s.name === 'In Progress')?.value || 0) / clientData.totalUsers) * 100).toFixed(1)}%
+                                    {(((clientData.statusData.find((s: StatusData) => s.name === 'In Progress')?.value || 0) / clientData.totalUsers) * 100).toFixed(1)}%
                                 </h3>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ clientData }) => {
                                         dataKey="value"
                                         paddingAngle={5}
                                     >
-                                        {clientData.statusData.map((_, index) => (
+                                        {clientData.statusData.map((_: StatusData, index: number) => (
                                             <Cell 
                                                 key={`cell-${index}`} 
                                                 fill={VIBRANT_COLORS[index % VIBRANT_COLORS.length]}
@@ -338,7 +338,7 @@ const OverviewDashboard: React.FC<{ monthData: Record<string, ClientData> }> = (
                                     data={(Object.entries(monthData) as [string, ClientData][])
                                         .map(([name, data]) => ({
                                             name: name.split(' ')[0],
-                                            completion: ((data.statusData.find((s: { name: string; value: number }) => s.name === 'Completed')?.value || 0) / data.totalUsers * 100),
+                                            completion: ((data.statusData.find((s: StatusData) => s.name === 'Completed')?.value || 0) / data.totalUsers * 100),
                                             avgStars: data.averageStars * 20,
                                             engagement: (data.totalUsers / stats.totalUsers * 100)
                                         }))}
@@ -404,7 +404,7 @@ const OverviewDashboard: React.FC<{ monthData: Record<string, ClientData> }> = (
                                         dataKey="value"
                                         paddingAngle={5}
                                     >
-                                        {stats.statusData.map((_, index) => (
+                                        {stats.statusData.map((_: StatusData, index: number) => (
                                             <Cell 
                                                 key={`cell-${index}`} 
                                                 fill={VIBRANT_COLORS[index % VIBRANT_COLORS.length]}
